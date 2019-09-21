@@ -36,3 +36,10 @@ project(':b-codegen') {
 		classNames = ['C','D']
 	}
 }
+allprojects {
+	tasks.withType(Test) {
+		testLogging {
+			events "passed", "skipped", "failed"
+		}
+	}
+}
