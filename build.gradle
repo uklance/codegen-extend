@@ -1,0 +1,38 @@
+allprojects {
+	repositories {
+		mavenCentral()
+	}
+}
+project(':a') {
+	apply plugin: 'java-library'
+}
+project(':a-codegen') {
+	apply plugin: CodegenPlugin
+	dependencies {
+		api 'org.hibernate:hibernate-core:5.2.17.Final'
+		api project(':a')
+	}
+	codegen {
+		packageName = 'com.foo'
+		classNames = ['A','B','C','D']
+	}
+}
+project(':b') {
+	apply plugin: 'java-library'
+	dependencies {
+		api project(':a')
+	}
+}
+project(':b-codegen') {
+	apply plugin: CodegenPlugin
+	dependencies {
+		api project(':b')
+		testImplementation 'junit:junit:4.12'
+		testImplementation 'org.mockito:mockito-all:1.10.19'
+	}
+	codegen {
+		extendsFrom project(':a-codegen')
+		packageName = 'com.foo'
+		classNames = ['C','D']
+	}
+}

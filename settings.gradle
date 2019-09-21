@@ -1,0 +1,3 @@
+include ':a', ':a-codegen' 
+include ':b', ':b-codegen'
+include ':c', ':c-codegen'
